@@ -7,6 +7,8 @@ module.exports = async function (fastify, opts) {
     url: "/s/:search",
     method: "GET",
     schema: {
+      tags: ["Movies"],
+      description: "Endpoint to get data movies by search",
       params: {
         type: "object",
         properties: {
@@ -51,6 +53,8 @@ module.exports = async function (fastify, opts) {
     url: "/d/:imdbID",
     method: "GET",
     schema: {
+      tags: ["Movies"],
+      description: "Endpoint to get detail data movies by imgbID",
       params: {
         type: "object",
         properties: {

@@ -1,10 +1,10 @@
 const server = require("../helper");
 const fastify = server();
 
-test("Get data naruto video from omdb api ", async () => {
+test("Get data naruto movies from omdb api ", async () => {
   const res = await fastify.inject({
     method: "GET",
-    url: "/api/video/s/naruto",
+    url: "/api/movies/s/naruto",
   });
 
   expect(res.statusCode).toEqual(200);
@@ -12,10 +12,10 @@ test("Get data naruto video from omdb api ", async () => {
   expect(res.json().data[0].Title).toBeDefined();
 });
 
-test("Get detail video with imdbID", async () => {
+test("Get detail movies with imdbID", async () => {
   const res = await fastify.inject({
     method: "GET",
-    url: "/api/video/d/tt0988824",
+    url: "/api/movies/d/tt0988824",
   });
 
   expect(res.statusCode).toEqual(200);
