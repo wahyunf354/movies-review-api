@@ -19,5 +19,5 @@ test("Get detail video with imdbID", async () => {
   });
 
   expect(res.statusCode).toEqual(200);
-  expect(res.json().data).toBeDefined();
+  expect(res.json().Title).toBeDefined();
 });

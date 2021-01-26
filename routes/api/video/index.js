@@ -1,11 +1,20 @@
 const fetch = require("node-fetch");
 const APIKEY = "2ace80b7";
+const url = `http://www.omdbapi.com/?`;
 
 module.exports = async function (fastify, opts) {
   fastify.route({
     url: "/s/:search",
     method: "GET",
     schema: {
+      params: {
+        type: "object",
+        properties: {
+          search: {
+            type: "string",
+          },
+        },
+      },
       response: {
         200: {
           type: "object",
@@ -29,13 +38,11 @@ module.exports = async function (fastify, opts) {
     },
     handler: async (request, reply) => {
       const { search } = request.params;
-      const res = await fetch(
-        `http://www.omdbapi.com/?apikey=${APIKEY}&s=${search}`,
-        {
-          method: "GET",
-        }
-      );
+      const res = await fetch(`${url}apikey=${APIKEY}&s=${search}`, {
+        method: "GET",
+      });
       const json = await res.json();
+
       reply.code(200).send({ data: json.Search });
     },
   });
@@ -54,11 +61,22 @@ module.exports = async function (fastify, opts) {
         200: {
           type: "object",
           properties: {
-            Title: { type: "string" },
+            Title: {
+              type: "string",
+            },
           },
         },
       },
     },
-    handler: async (request, reply) => {},
+    handler: async (request, reply) => {
+      const { imdbID } = request.params;
+
+      const res = await fetch(`${url}apikey=${APIKEY}&i=${imdbID}`, {
+        method: "GET",
+      });
+      const json = await res.json();
+
+      reply.code(200).send({ Title: "naruto" });
+    },
   });
 };

@@ -1,3 +1,4 @@
 ## TODO
 
-- [ ] make endpoint detail movie
+- [x] make endpoint detail movie
+- [ ] swagger

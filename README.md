@@ -8,8 +8,8 @@
 <div align="center">
 
 [![Status](https://img.shields.io/badge/status-active-success.svg)]()
-[![GitHub Issues](https://img.shields.io/github/issues/kylelobo/The-Documentation-Compendium.svg)](https://github.com/kylelobo/The-Documentation-Compendium/issues)
-[![GitHub Pull Requests](https://img.shields.io/github/issues-pr/kylelobo/The-Documentation-Compendium.svg)](https://github.com/kylelobo/The-Documentation-Compendium/pulls)
+[![GitHub Issues](https://img.shields.io/github/issues/wahyunf354/movies-review-api)](https://github.com/wahyunf345/movies-review-api/issues)
+[![GitHub Pull Requests](https://img.shields.io/github/issues-pr/wahyunf354/movies-review-api)](https://github.com/wahyunf354/movies-review-api/pulls)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](/LICENSE)
 
 </div>
@@ -98,16 +98,15 @@ Add additional notes about how to deploy this on a live system.
 
 ## ⛏️ Built Using <a name = "built_using"></a>
 
-- [MongoDB](https://www.mongodb.com/) - Database
-- [Express](https://expressjs.com/) - Server Framework
-- [VueJs](https://vuejs.org/) - Web Framework
+- [Postgres](https://postgres.org/) - Database
+- [Fastify](https://fastify.io/) - Server Framework
+- [OMDb API](https://omdbapi.com/) - 3th Rest API
 - [NodeJs](https://nodejs.org/en/) - Server Environment
 
 ## ✍️ Authors <a name = "authors"></a>
 
-- [@kylelobo](https://github.com/kylelobo) - Idea & Initial work
-
-See also the list of [contributors](https://github.com/kylelobo/The-Documentation-Compendium/contributors) who participated in this project.
+- [@wahyunf354](https://github.com/wahyunf354) - Idea & Initial work
+- [@rizafahmi](https://github.com/rizafahmi) - Idea
 
 ## 🎉 Acknowledgements <a name = "acknowledgement"></a>
 
