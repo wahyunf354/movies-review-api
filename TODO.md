@@ -1,4 +1,6 @@
 ## TODO
 
 - [x] make endpoint detail movie
-- [ ] swagger
+- [x] swagger
+- [ ] JWT[Gagal]
+- [ ] Connect Db

@@ -1,5 +1,6 @@
 const server = require("../helper");
 const fastify = server();
+require("dotenv").config();
 
 test("Get data naruto movies from omdb api ", async () => {
   const res = await fastify.inject({
