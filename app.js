@@ -5,8 +5,10 @@ const AutoLoad = require("fastify-autoload");
 require("dotenv").config();
 
 module.exports = async function (fastify, opts) {
-  // Place here your custom code!
-
+  // Connect to Database
+  fastify.register(require("fastify-postgres"), {
+    connectionString: "postgres://movies_pg:localhost@localhost:4000/movies_db",
+  });
   // Do not touch the following lines
 
   // This loads all plugins defined in plugins

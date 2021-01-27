@@ -21,8 +21,10 @@
     "fastify-autoload": "^3.0.2",
     "fastify-cli": "^2.5.1",
     "fastify-plugin": "^3.0.0",
+    "fastify-postgres": "^3.3.0",
     "fastify-swagger": "^3.5.0",
-    "node-fetch": "^2.6.1"
+    "node-fetch": "^2.6.1",
+    "pg": "^8.5.1"
   },
   "devDependencies": {
     "jest": "^26.6.3"
