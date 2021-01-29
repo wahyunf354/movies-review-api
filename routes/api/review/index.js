@@ -142,7 +142,7 @@ module.exports = async function (fastify, opts) {
       const {
         rows,
       } = await client.query(
-        "UPDATE movies_review SET review=$1 WHERE id=$2 RETURNING imdbID",
+        "UPDATE movies_review SET review=$1, updated_at=CURRENT_TIMESTAMP WHERE id=$2 RETURNING imdbID",
         [review, id]
       );
       client.release();
@@ -151,6 +151,55 @@ module.exports = async function (fastify, opts) {
         data: {
           id,
           imdbID: rows[0].imdbid,
+          review,
+        },
+      });
+    },
+  });
+
+  fastify.route({
+    method: "GET",
+    url: "/:id",
+    schema: {
+      tags: ["Review Movie"],
+      description: "endpoint to get one review movie by id",
+      params: {
+        type: "object",
+        required: ["id"],
+        properties: {
+          id: { type: "number" },
+        },
+      },
+      response: {
+        200: {
+          type: "object",
+          required: ["data"],
+          properties: {
+            data: {
+              type: "object",
+              properties: {
+                id: { type: "number" },
+                imdbID: { type: "string" },
+                review: { type: "string" },
+              },
+            },
+          },
+        },
+      },
+    },
+    handler: async (request, reply) => {
+      const { id } = request.params;
+      const client = await fastify.pg.connect();
+
+      const {
+        rows,
+      } = await client.query("SELECT * FROM movies_review WHERE id=$1", [id]);
+      const { imdbid: imdbID, review } = rows[0];
+      client.release();
+      reply.code(200).send({
+        data: {
+          id,
+          imdbID,
           review,
         },
       });

@@ -58,6 +58,27 @@ test("update revew with id", async () => {
   expect(res.json().data).toBeDefined();
   expect(res.json().data.review).toEqual(payload.review);
 });
-test.todo("get one review");
+
+test("get one review", async () => {
+  payload = {
+    review: "Kerennnnnnnnnnnn!!!!!",
+  };
+  const resPost = await fastify.inject({
+    url: "/api/review/tt0988824",
+    method: "POST",
+    payload,
+  });
+
+  const res = await fastify.inject({
+    method: "GET",
+    url: `/api/review/${resPost.json().data.id}`,
+  });
+
+  expect(res.statusCode).toEqual(200);
+  expect(res.json().data.review).toEqual(payload.review);
+  expect(res.json().data.imdbID).toEqual("tt0988824");
+  expect(res.json().data.id).toEqual(resPost.json().data.id);
+});
+
 test.todo("get one movie with review");
 test.todo("get only movie with review");

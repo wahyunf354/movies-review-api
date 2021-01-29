@@ -1,27 +1,6 @@
 require("dotenv").config();
-const Fastify = require("fastify");
-const fp = require("fastify-plugin");
-const App = require("../../app");
+const server = require("../helper");
 
-const server = () => {
-  const app = Fastify({
-    logger: {
-      level: process.env.LOGGER_LEVEL || "silent",
-    },
-    pluginTimeout: 2 * 60 * 1000,
-  });
-  // setup lifecycle
-
-  beforeAll(async () => {
-    app.register(fp(App));
-    await app.ready();
-  });
-
-  afterAll(async () => {
-    await app.close();
-  });
-  return app;
-};
 // test skip because limit API
 const fastify = server();
 xtest("Get data naruto movies from omdb api ", async () => {
