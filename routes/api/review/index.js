@@ -1,6 +1,4 @@
 module.exports = async function (fastify, opts) {
-  const client = await fastify.pg.connect();
-
   fastify.route({
     method: "POST",
     url: "/:imdbID",
@@ -40,6 +38,8 @@ module.exports = async function (fastify, opts) {
     handler: async (request, reply) => {
       const { imdbID } = request.params;
       const { review } = request.body;
+      const client = await fastify.pg.connect();
+
       const result = await client.query(
         "INSERT INTO movies_review(imdbID, review) VALUES ($1, $2) RETURNING id;",
         [imdbID, review]

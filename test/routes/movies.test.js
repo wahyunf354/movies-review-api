@@ -1,7 +1,29 @@
-const server = require("../helper");
-const fastify = server();
 require("dotenv").config();
+const Fastify = require("fastify");
+const fp = require("fastify-plugin");
+const App = require("../../app");
 
+const server = () => {
+  const app = Fastify({
+    logger: {
+      level: process.env.LOGGER_LEVEL || "silent",
+    },
+    pluginTimeout: 2 * 60 * 1000,
+  });
+  // setup lifecycle
+
+  beforeAll(async () => {
+    app.register(fp(App));
+    await app.ready();
+  });
+
+  afterAll(async () => {
+    await app.close();
+  });
+  return app;
+};
+
+const fastify = server();
 test("Get data naruto movies from omdb api ", async () => {
   const res = await fastify.inject({
     method: "GET",
