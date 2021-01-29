@@ -26,9 +26,11 @@ module.exports = async function (fastify, opts) {
           properties: {
             data: {
               type: "object",
-              required: ["id"],
+              required: ["id", "review", "imdbID"],
               properties: {
                 id: { type: "number" },
+                imdbID: { type: "string" },
+                review: { type: "string" },
               },
             },
           },
@@ -45,7 +47,51 @@ module.exports = async function (fastify, opts) {
         [imdbID, review]
       );
       client.release();
-      reply.code(200).send({ data: { id: result.rows[0].id } });
+      reply.code(200).send({
+        data: {
+          id: result.rows[0].id,
+          imdbID,
+          review,
+        },
+      });
+    },
+  });
+
+  fastify.route({
+    method: "DELETE",
+    url: "/:id",
+    schema: {
+      tags: ["Review Movie"],
+      description:
+        "endpoint to delete review movie - WARNING - Delete is permanent",
+      params: {
+        type: "object",
+        required: ["id"],
+        properties: {
+          id: { type: "number" },
+        },
+      },
+      response: {
+        204: {
+          type: "object",
+          required: ["message"],
+          properties: {
+            message: {
+              type: "string",
+            },
+          },
+        },
+      },
+    },
+    handler: async (request, reply) => {
+      const { id } = request.params;
+      const client = await fastify.pg.connect();
+
+      await client.query("DELETE FROM movies_review WHERE id=$1", [id]);
+      client.release();
+      reply.code(204).send({
+        message: "Success delete review - WARNING!",
+      });
     },
   });
 };
