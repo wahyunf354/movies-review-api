@@ -94,4 +94,66 @@ module.exports = async function (fastify, opts) {
       });
     },
   });
+
+  fastify.route({
+    method: "PUT",
+    url: "/:id",
+    schema: {
+      tags: ["Review Movie"],
+      description: "endpoint to update review movie",
+      params: {
+        type: "object",
+        required: ["id"],
+        properties: {
+          id: { type: "number" },
+        },
+      },
+      body: {
+        type: "object",
+        required: ["review"],
+        properties: {
+          review: { type: "string" },
+        },
+      },
+      response: {
+        200: {
+          type: "object",
+          required: ["data", "message"],
+          properties: {
+            message: { type: "string" },
+            data: {
+              type: "object",
+              required: ["id", "review", "imdbID"],
+              properties: {
+                id: { type: "number" },
+                imdbID: { type: "string" },
+                review: { type: "string" },
+              },
+            },
+          },
+        },
+      },
+    },
+    handler: async (request, reply) => {
+      const { id } = request.params;
+      const { review } = request.body;
+      const client = await fastify.pg.connect();
+
+      const {
+        rows,
+      } = await client.query(
+        "UPDATE movies_review SET review=$1 WHERE id=$2 RETURNING imdbID",
+        [review, id]
+      );
+      client.release();
+      reply.code(200).send({
+        message: "Success update review",
+        data: {
+          id,
+          imdbID: rows[0].imdbid,
+          review,
+        },
+      });
+    },
+  });
 };
