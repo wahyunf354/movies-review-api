@@ -1,5 +1,5 @@
 const fetch = require("node-fetch");
-const APIKEY = "2ace80b7";
+const APIKEY = process.env.APIKEY;
 const url = `http://www.omdbapi.com/?`;
 
 module.exports = async function (fastify, opts) {

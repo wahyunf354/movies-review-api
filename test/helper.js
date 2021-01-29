@@ -21,6 +21,9 @@ const server = () => {
   beforeAll(async () => {
     app.register(fp(App));
     await app.ready();
+    const client = await app.pg.connect();
+    await client.query(queryClearTable);
+    client.release();
   });
 
   afterAll(async () => {
