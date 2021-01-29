@@ -9,6 +9,6 @@ test("create a review movies with imdbID tt0988824", async () => {
       review: "Kerennnnnnnnnnnn!!!!!",
     },
   });
-  console.warn(res.json());
+
   expect(res.statusCode).toEqual(200);
 });

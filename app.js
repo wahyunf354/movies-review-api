@@ -7,7 +7,7 @@ require("dotenv").config();
 module.exports = async function (fastify, opts) {
   // Connect to Database
   fastify.register(require("fastify-postgres"), {
-    connectionString: "postgres://movies_pg:localhost@localhost:4000/movies_db",
+    connectionString: process.env.DB_POSTGRES,
   });
   // Do not touch the following lines
 

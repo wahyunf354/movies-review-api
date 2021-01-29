@@ -57,3 +57,5 @@ profile*
 *clinic*
 *flamegraph*
 .env
+movie-review_test.session.sql
+movie-review.session.sql
