@@ -79,6 +79,3 @@ test("get one review", async () => {
   expect(res.json().data.imdbID).toEqual("tt0988824");
   expect(res.json().data.id).toEqual(resPost.json().data.id);
 });
-
-test.todo("get one movie with review");
-test.todo("get only movie with review");

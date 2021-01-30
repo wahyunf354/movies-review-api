@@ -46,6 +46,7 @@ module.exports = async function (fastify, opts) {
         "INSERT INTO movies_review(imdbID, review) VALUES ($1, $2) RETURNING id;",
         [imdbID, review]
       );
+
       client.release();
       reply.code(200).send({
         data: {
