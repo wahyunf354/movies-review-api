@@ -7,7 +7,7 @@
     "test": "test"
   },
   "scripts": {
-    "test": "jest --runInBand",
+    "test": "jest --coverage --runInBand",
     "start": "fastify start -l info app.js",
     "dev": "fastify start -w -l info -P app.js"
   },

@@ -131,4 +131,47 @@ module.exports = async function (fastify, opts) {
       });
     },
   });
+
+  fastify.route({
+    url: "/",
+    method: "GET",
+    schema: {
+      tags: ["Movie and Review"],
+      description: "Endpoint to get all movie with review it",
+      response: {
+        200: {
+          type: "object",
+          properties: {
+            data: {
+              type: "array",
+              items: {
+                type: "object",
+                properties: {
+                  Title: { type: "string" },
+                  Year: { type: "string" },
+                  imdbID: { type: "string" },
+                  Poster: { type: "string" },
+                  Type: { type: "string" },
+                  reviews: {
+                    type: "array",
+                    items: {
+                      type: "object",
+                      properties: {
+                        review: { type: "string" },
+                        created_at: { type: "string", format: "date" },
+                        updated_at: { type: "string", format: "date" },
+                      },
+                    },
+                  },
+                },
+              },
+            },
+          },
+        },
+      },
+    },
+    handler: async (request, reply) => {
+      // TODO: sampai sini
+    },
+  });
 };
