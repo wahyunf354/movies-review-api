@@ -171,7 +171,26 @@ module.exports = async function (fastify, opts) {
       },
     },
     handler: async (request, reply) => {
-      // TODO: sampai sini
+      // TODO: sampai sini ya
+      reply.code(200).send({
+        data: [
+          {
+            Title: "Naruto: Shippûden",
+            Year: "2007–2017",
+            imdbID: "tt0988824",
+            Poster:
+              "https://m.media-amazon.com/images/M/MV5BMTE5NzIwMGUtYTE1MS00MDUxLTgyZjctOWVkZDAxM2M4ZWQ4XkEyXkFqcGdeQXVyNjc2NjA5MTU@._V1_SX300.jpg",
+            Type: "series",
+            reviews: [
+              {
+                review: "Kerennnn",
+                created_at: "25-2-1002",
+                updated_at: "25-34-1200",
+              },
+            ],
+          },
+        ],
+      });
     },
   });
 };

@@ -65,8 +65,83 @@ module.exports = async function (fastify, opts) {
         200: {
           type: "object",
           properties: {
-            Title: {
-              type: "string",
+            data: {
+              type: "object",
+              properties: {
+                Title: {
+                  type: "string",
+                },
+                Year: {
+                  type: "string",
+                },
+                Rated: {
+                  type: "string",
+                },
+                Released: {
+                  type: "string",
+                },
+                Runtime: {
+                  type: "string",
+                },
+                Genre: {
+                  type: "string",
+                },
+                Director: {
+                  type: "string",
+                },
+                Writer: {
+                  type: "string",
+                },
+                Actors: {
+                  type: "string",
+                },
+                Plot: {
+                  type: "string",
+                },
+                Language: {
+                  type: "string",
+                },
+                Country: {
+                  type: "string",
+                },
+                Awards: {
+                  type: "string",
+                },
+                Poster: {
+                  type: "string",
+                },
+                Ratings: {
+                  type: "array",
+                  items: {
+                    type: "object",
+                    properties: {
+                      Source: { type: "string" },
+                      Value: { type: "string" },
+                    },
+                  },
+                },
+                Metascore: {
+                  type: "string",
+                },
+                imdbRating: {
+                  type: "string",
+                },
+                imdbVotes: {
+                  type: "string",
+                },
+                imdbID: {
+                  type: "string",
+                },
+                Type: {
+                  type: "string",
+                },
+                totalSeasons: {
+                  type: "string",
+                },
+                Response: {
+                  type: "string",
+                },
+              },
             },
           },
         },
@@ -79,8 +154,7 @@ module.exports = async function (fastify, opts) {
         method: "GET",
       });
       const json = await res.json();
-
-      reply.code(200).send({ Title: "naruto" });
+      reply.code(200).send({ data: json });
     },
   });
 };

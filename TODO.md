@@ -3,4 +3,5 @@
 - [x] make endpoint detail movie
 - [x] swagger
 - [ ] JWT[Gagal]
-- [ ] Connect Db
+- [x] Connect Db
+- [ ] Membuat table movies

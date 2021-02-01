@@ -1,4 +1,8 @@
+const fetch = require("node-fetch");
+
 module.exports = async function (fastify, opts) {
+  const url = `http://www.omdbapi.com/?`;
+
   fastify.route({
     method: "POST",
     url: "/:imdbID",
@@ -40,7 +44,16 @@ module.exports = async function (fastify, opts) {
     handler: async (request, reply) => {
       const { imdbID } = request.params;
       const { review } = request.body;
+
+      const res = await fetch(`${url}apikey=${process.env.APIKEY}&i=${imdbID}`);
+      const json = await res.json();
+
       const client = await fastify.pg.connect();
+
+      await client.query(
+        "INSERT INTO movies(imdbid, data) SELECT $1, $2 WHERE NOT EXISTS(SELECT imdbid FROM movies WHERE imdbid=$3);",
+        [imdbID, json, imdbID]
+      );
 
       const result = await client.query(
         "INSERT INTO movies_review(imdbID, review) VALUES ($1, $2) RETURNING id;",
