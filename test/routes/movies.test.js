@@ -3,7 +3,7 @@ const server = require("../helper");
 
 // test skip because limit API
 const fastify = server();
-xtest("Get data naruto movies from omdb api ", async () => {
+test("Get data naruto movies from omdb api ", async () => {
   const res = await fastify.inject({
     method: "GET",
     url: "/api/movies/s/naruto",

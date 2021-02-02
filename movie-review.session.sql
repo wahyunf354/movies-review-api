@@ -1,8 +1,8 @@
 -- DROP TABLE movies;
--- CREATE TABLE movies(
---   imdbid VARCHAR(10) PRIMARY KEY NOT NULL,
---   data JSON
--- );
+CREATE TABLE movies(
+  imdbid VARCHAR(10) PRIMARY KEY NOT NULL,
+  data JSON
+);
 -- DELETE FROM movies_review WHERE id < 19;
 -- CREATE TABLE movies_review (
 --   id SERIAL NOT NULL PRIMARY KEY,

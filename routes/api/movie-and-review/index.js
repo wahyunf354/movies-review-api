@@ -100,6 +100,13 @@ module.exports = async function (fastify, opts) {
                 },
                 reviews: {
                   type: "array",
+                  items: {
+                    type: "object",
+                    properties: {
+                      review: { type: "string" },
+                      id: { type: "number" },
+                    },
+                  },
                 },
               },
             },
@@ -109,25 +116,30 @@ module.exports = async function (fastify, opts) {
     },
     handler: async (request, reply) => {
       const { imdbID } = request.params;
-      // get a data movie from rest API
-      const resAPI = await fetch(`${url}apikey=${APIKEY}&i=${imdbID}`, {
-        method: "GET",
-      });
-      const resultAPI = await resAPI.json();
-      // get data review from database
+
+      // get data movie review from database
       const client = await fastify.pg.connect();
       const {
         rows,
-      } = await client.query("SELECT * FROM movies_review WHERE imdbid=$1", [
-        imdbID,
-      ]);
+      } = await client.query(
+        "SELECT movies.imdbid, movies.data, movies_review.review, movies_review.id FROM movies INNER JOIN movies_review ON movies.imdbid=movies_review.imdbid WHERE movies.imdbid=$1;",
+        [imdbID]
+      );
       client.release();
+
+      // menyusun data
+      let reviews = [];
+
       rows.forEach((e) => {
         e.imdbID = e.imdbid;
         delete e.imdbid;
+        reviews.push({ review: e.review, id: e.id });
       });
+
+      const movie = rows[0].data;
+
       reply.code(200).send({
-        data: { ...resultAPI, reviews: rows },
+        data: { ...movie, reviews },
       });
     },
   });
@@ -157,6 +169,7 @@ module.exports = async function (fastify, opts) {
                     items: {
                       type: "object",
                       properties: {
+                        id: { type: "number" },
                         review: { type: "string" },
                         created_at: { type: "string", format: "date" },
                         updated_at: { type: "string", format: "date" },
@@ -171,25 +184,32 @@ module.exports = async function (fastify, opts) {
       },
     },
     handler: async (request, reply) => {
-      // TODO: sampai sini ya
+      // get data review from database
+      const client = await fastify.pg.connect();
+      const { rows } = await client.query(
+        "SELECT movies.imdbid, movies.data, movies_review.review, movies_review.id FROM movies INNER JOIN movies_review ON movies.imdbid=movies_review.imdbid;"
+      );
+      client.release();
+
+      let data = [];
+      rows.forEach((e, i) => {
+        if (i === 0) {
+          data.push({ ...e.data, reviews: [] });
+        } else if (e.imdbid !== rows[i - 1].imdbid) {
+          data.push({ ...e.data, reviews: [] });
+        }
+      });
+
+      data.forEach((e) => {
+        rows.forEach((f) => {
+          if (e.imdbID === f.imdbid) {
+            e.reviews.push({ review: f.review, id: f.id });
+          }
+        });
+      });
+
       reply.code(200).send({
-        data: [
-          {
-            Title: "Naruto: Shippûden",
-            Year: "2007–2017",
-            imdbID: "tt0988824",
-            Poster:
-              "https://m.media-amazon.com/images/M/MV5BMTE5NzIwMGUtYTE1MS00MDUxLTgyZjctOWVkZDAxM2M4ZWQ4XkEyXkFqcGdeQXVyNjc2NjA5MTU@._V1_SX300.jpg",
-            Type: "series",
-            reviews: [
-              {
-                review: "Kerennnn",
-                created_at: "25-2-1002",
-                updated_at: "25-34-1200",
-              },
-            ],
-          },
-        ],
+        data,
       });
     },
   });
