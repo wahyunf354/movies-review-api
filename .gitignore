@@ -56,6 +56,9 @@ profile-*
 profile*
 *clinic*
 *flamegraph*
+
+# from me
 .env
 movie-review_test.session.sql
 movie-review.session.sql
+.vercel
